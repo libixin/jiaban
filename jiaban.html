@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jiaban</title>
+</head>
+<body>
+	<input id="numb">
+
+	<button type="button" onclick="myFunction()">计算</button>
+	
+	<p id="demo"></p>
+
+	<textarea name="" id="log" cols="80" rows="40"></textarea>
+</form>
+</body>
+</html>
+<script>
+function getMyDay(date){
+    var week;
+    if(date.getDay()==0) week=0;
+    if(date.getDay()==1) week=1;
+    if(date.getDay()==2) week=2;
+    if(date.getDay()==3) week=3;
+    if(date.getDay()==4) week=4;
+    if(date.getDay()==5) week=5;
+    if(date.getDay()==6) week=6;
+    return week;
+}
+function myFunction() {
+		var all = 0;
+		var log = "";
+    var obj = document.getElementById("numb").value;
+		obj = JSON.parse(obj);
+    var data = obj.result;
+    var length = Object.keys(data).length;
+    for (var i = 1; i < length+1; i++) {
+    	if(data[i].isWorkDay&& +(data[i].signInfo[1].signTime.substr(0,2))>17){
+    		var tmp0 = "18:00:00";
+    		var tmp1 = "18:30:00";
+    		var tmp2 = "20:30:00";
+    		var date = data[i].date;
+    		var end = data[i].signInfo[1].signTime;
+    		var startTime0 = Date.parse(date+' '+tmp0);
+    		var startTime1 = Date.parse(date+' '+tmp1);
+
+    		var endTime1 = Date.parse(date+' '+tmp2);
+    		var endTime2 = Date.parse(date+' '+end);
+    		
+    		var difference = endTime2-endTime1>=0?endTime2-startTime1:endTime2-startTime0;
+
+				
+				console.log((difference/3600000).toFixed(3),"——————————————"+data[i].date);
+
+				log = log + (difference/3600000).toFixed(3)+"——————————————"+data[i].date + "\n" + "\n";
+
+				if(+(difference/3600000).toFixed(3)<2 && getMyDay(new Date(data[i].date))!=5){
+					console.log(data[i].date,"异常，请检查");
+					log = log + data[i].date+"异常，请检查" + "\n"+ "\n";
+				}
+
+				all = all+difference;
+
+    	}else if(!!data[i].signInfo && !data[i].isWorkDay){
+				var date = data[i].date;
+				var start = data[i].signInfo[0].signTime;
+    		var end = data[i].signInfo[1].signTime;
+
+				var startTime = Date.parse(date+' '+start);
+    		var endTime = Date.parse(date+' '+end);
+
+				var difference = endTime - startTime;
+
+				console.log((difference/3600000).toFixed(3),"周末","——————————————"+data[i].date);
+				log = log + (difference/3600000).toFixed(3)+" 周末 "+"——————————————"+data[i].date + "\n"+ "\n";
+
+				if(+(difference/3600000).toFixed(3)<2){
+					console.log(data[i].date,"异常，请检查");
+					log = log + data[i].date+"异常，请检查" + "\n"+ "\n";
+				}
+				all = all+difference;
+			}
+    }
+		document.getElementById("demo").innerHTML = (all/3600000).toFixed(3);
+    document.getElementById("log").innerHTML = log;
+}
+</script>
