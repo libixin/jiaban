@@ -10,6 +10,7 @@ function compute(month){
   })
   
 }
+
 chrome.runtime.onMessage.addListener(//监听扩展程序进程或内容脚本发送请求的请求
     function (request, sender, sendResponse) {
         month = request.month
