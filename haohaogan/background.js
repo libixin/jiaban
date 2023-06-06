@@ -77,7 +77,7 @@ function myFunction(data) {
       return fail
     }
     for (var i = 1; i < length+1; i++) {
-    	if(data[i].isWorkDay&& +(data[i].signInfo[1].signTime.substr(0,2))>17){
+    	if(data[i].signInfo!=undefined && data[i].signInfo.length==2 && data[i].isWorkDay&& +(data[i].signInfo[1].signTime.substr(0,2))>17){
     		var tmp0 = "18:00:00";
     		var tmp1 = "18:30:00";
     		var tmp2 = "20:30:00";
