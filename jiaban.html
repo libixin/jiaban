@@ -54,7 +54,6 @@ function myFunction() {
 				log = log + (difference/3600000).toFixed(3)+"——————————————"+data[i].date + "\n" + "\n";
 
 				if(+(difference/3600000).toFixed(3)<2 && getMyDay(new Date(data[i].date))!=5){
-					console.log(data[i].date,"异常，请检查");
 					log = log + data[i].date+"异常，请检查" + "\n"+ "\n";
 				}
 
@@ -70,11 +69,9 @@ function myFunction() {
 
 				var difference = endTime - startTime;
 
-				console.log((difference/3600000).toFixed(3),"周末","——————————————"+data[i].date);
 				log = log + (difference/3600000).toFixed(3)+" 周末 "+"——————————————"+data[i].date + "\n"+ "\n";
 
 				if(+(difference/3600000).toFixed(3)<2){
-					console.log(data[i].date,"异常，请检查");
 					log = log + data[i].date+"异常，请检查" + "\n"+ "\n";
 				}
 				all = all+difference;
