@@ -31,11 +31,12 @@ var data,cookieHeader;
   });
 
   function getData(cookies,month) {
+	  var year = new Date().getFullYear();
      return new Promise((resolve, reject) => {
       $.ajax({
         url: 'http://113.98.195.201:8998/api/kq/myattendance/getHrmKQMonthReportInfo',
         type: 'POST',
-        data: "typevalue=2023-"+month+"&loaddata=1&type=2&",
+        data: `typevalue=${year}-${month}&loaddata=1&type=2&`,
         dataType: 'text',
         headers:{
           "Content-Type":"application/x-www-form-urlencoded; charset=utf-8",
@@ -106,7 +107,7 @@ function myFunction(data) {
 				var date = data[i].date;
 				var start = data[i].signInfo[0].signTime;
     		var end = data[i].signInfo[1].signTime;
-
+			if(start < '13:30:00') start = '13:30:00'
 				var startTime = Date.parse(date+' '+start);
     		var endTime = Date.parse(date+' '+end);
 
