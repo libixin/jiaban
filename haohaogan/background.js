@@ -92,15 +92,15 @@ function myFunction(data) {
     		
     		var difference = endTime2-endTime1>=0?endTime2-startTime1:endTime2-startTime0;
 
+				if(isNaN(difference)) difference = 0;
 				
 				console.log((difference/3600000).toFixed(3),"—————————"+data[i].date);
 
 				log = log + (difference/3600000).toFixed(3)+"—————————"+data[i].date + "\n" + "\n";
 
 				if(+(difference/3600000).toFixed(3)<2 && getMyDay(new Date(data[i].date))!=5){
-					log = log + data[i].date+"异常，是不是加太少了" + "\n"+ "\n";
+					log = log + data[i].date+"异常，是不是没打卡叼毛" + "\n"+ "\n";
 				}
-
 				all = all+difference;
 
     	}else if(!!data[i].signInfo && !data[i].isWorkDay){
@@ -112,17 +112,19 @@ function myFunction(data) {
     		var endTime = Date.parse(date+' '+end);
 
 				var difference = endTime - startTime;
+				if(isNaN(difference)) difference = 0;
 
 				console.log((difference/3600000).toFixed(3),"周末","—————————"+data[i].date);
 				log = log + (difference/3600000).toFixed(3)+" 周末 "+"—————————"+data[i].date + "\n"+ "\n";
 
 				if(+(difference/3600000).toFixed(3)<2){
-					log = log + data[i].date+"异常，是不是加太少了" + "\n"+ "\n";
+					log = log + data[i].date+"异常，是不是没打卡叼毛" + "\n"+ "\n";
 				}
-        if(+(difference/3600000).toFixed(3)>8){
-					log = log + data[i].date+"异常，你太卷了，卷B" + "\n"+ "\n";
-				}
-				all = all+difference;
+			if(+(difference/3600000).toFixed(3)>8){
+				log = log + data[i].date+"异常，你太卷了，卷B" + "\n"+ "\n";
+			}
+			all = all+difference;
+				
 			}
     }
     console.log((all/3600000).toFixed(3));
