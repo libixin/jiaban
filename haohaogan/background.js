@@ -18,7 +18,7 @@ var data,cookieHeader;
             });
 
           } catch (error) {
-            data = "别瞎鸡儿乱输！！!"
+            data = "别乱输！！!"
           }
         
         setTimeout(() => {
@@ -107,14 +107,20 @@ function myFunction(data) {
 				var date = data[i].date;
 				var start = data[i].signInfo[0].signTime;
     		var end = data[i].signInfo[1].signTime;
-			if(start < '13:30:00') start = '13:30:00'
+			if(start < '08:30:00') start = '08:30:00'
 				var startTime = Date.parse(date+' '+start);
+      
     		var endTime = Date.parse(date+' '+end);
 
 				var difference = endTime - startTime;
+        if(end > '13:30:00' && start < '12:00:00'){
+          difference = difference - 5400000
+        }
+        if(end > '20:30:00'){
+          difference = difference - 1800000
+        }
 				if(isNaN(difference)) difference = 0;
 
-				console.log((difference/3600000).toFixed(3),"周末","—————————"+data[i].date);
 				log = log + (difference/3600000).toFixed(3)+" 周末 "+"—————————"+data[i].date + "\n"+ "\n";
 
 				if(+(difference/3600000).toFixed(3)<2){
